@@ -12,7 +12,7 @@ $(function() {
      * empty.
      */
 
-    it('are defined', function() {
+    it('allFeeds variable is defined', function() {
       expect(allFeeds).toBeDefined();
       expect(allFeeds.length).not.toBe(0);
     });
@@ -20,7 +20,7 @@ $(function() {
     /* Tests to ensures allFeeds variable has a URL defined
      * and that the URL is not empty.
      */
-    it('Feeds Url is defined', function() {
+    it('RSS Feeds have URLs', function() {
       for (var i = 0; i < allFeeds.length; i++) {
         expect(allFeeds[i].url).toBeDefined();
         expect(allFeeds[i].url).not.toBe('');
@@ -31,7 +31,7 @@ $(function() {
     /* Tests to ensures allFeeds variable has a URL defined
      * and that the URL is not empty.
      */
-    it('Feeds Name is defined', function() {
+    it('RSS Feeds have names', function() {
       for (var i = 0; i < allFeeds.length; i++) {
         expect(allFeeds[i].name).toBeDefined();
         expect(allFeeds[i].name).not.toBe('');
@@ -69,15 +69,13 @@ $(function() {
      * function is called and completes its work, there is at least
      * a single .entry element within the .feed container.
      */
-     beforeEach(function (done) {
-       setTimeout(function() {
-         init();
-         done();
-       }, 3000);
-     });
-     it('Load feed returns at least one entry', function (done) {
+     beforeEach(function(done) {
+       loadFeed(0, function() {
+        done();
+      });
+    });
+     it('Load feed returns at least one entry', function () {
        expect(document.getElementsByClassName('feed')[0].children.length).not.toBe(0);
-       done();
      });
 
   });
@@ -99,11 +97,10 @@ $(function() {
        done();
      });
 
-     it('Content changes for new feeds', function(done){
+     it('Content changes for new feeds', function(){
       loadFeed(1);
       feedTwoHeader = $('.feed').find('h2').text();
       expect(feedOneHeader).not.toEqual(feedTwoHeader);
-      done();
      });
   });
 }());
